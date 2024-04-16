@@ -3,6 +3,14 @@ export type GetShootingSettingResponseBody = {
   ability: string[];
 };
 
+export type SetShootingSettingRequestBody = {
+  value: string;
+};
+
+export type SetShootingSettingResponseBody = {
+  value: string;
+};
+
 export class CCAPIClient {
   constructor(private readonly base: string) {}
 
@@ -17,9 +25,24 @@ export class CCAPIClient {
     }
   }
 
-  public getAVSetting() {
+  public getAV() {
     return CCAPIClient.request(
       new URL("/ccapi/ver100/shooting/settings/av", this.base),
     ) as Promise<GetShootingSettingResponseBody>;
+  }
+
+  public setAV(value: string) {
+    return CCAPIClient.request(
+      new URL("/ccapi/ver100/shooting/settings/av", this.base),
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          value: value,
+        }),
+      },
+    ) as Promise<SetShootingSettingResponseBody>;
   }
 }
