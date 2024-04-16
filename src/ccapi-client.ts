@@ -45,4 +45,10 @@ export class CCAPIClient {
       },
     ) as Promise<SetShootingSettingResponseBody>;
   }
+
+  public getISO() {
+    return CCAPIClient.request(
+      new URL("/ccapi/ver100/shooting/settings/iso", this.base),
+    ) as Promise<GetShootingSettingResponseBody>;
+  }
 }
