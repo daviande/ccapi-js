@@ -11,6 +11,11 @@ export type SetShootingSettingResponseBody = {
   value: string;
 };
 
+enum ShootingSetting {
+  AV = "av",
+  ISO = "iso",
+}
+
 export class CCAPIClient {
   constructor(private readonly base: string) {}
 
@@ -25,45 +30,40 @@ export class CCAPIClient {
     }
   }
 
-  public getAV() {
+  private getShootingSetting(setting: ShootingSetting) {
     return CCAPIClient.request(
-      new URL("/ccapi/ver100/shooting/settings/av", this.base),
+      new URL(`/ccapi/ver100/shooting/settings/${setting}`, this.base),
     ) as Promise<GetShootingSettingResponseBody>;
+  }
+
+  private setShootingSetting(setting: ShootingSetting, value: string) {
+    return CCAPIClient.request(
+      new URL(`/ccapi/ver100/shooting/settings/${setting}`, this.base),
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          value,
+        }),
+      },
+    ) as Promise<SetShootingSettingResponseBody>;
+  }
+
+  public getAV() {
+    return this.getShootingSetting(ShootingSetting.AV);
   }
 
   public setAV(value: string) {
-    return CCAPIClient.request(
-      new URL("/ccapi/ver100/shooting/settings/av", this.base),
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          value,
-        }),
-      },
-    ) as Promise<SetShootingSettingResponseBody>;
+    return this.setShootingSetting(ShootingSetting.AV, value);
   }
 
   public getISO() {
-    return CCAPIClient.request(
-      new URL("/ccapi/ver100/shooting/settings/iso", this.base),
-    ) as Promise<GetShootingSettingResponseBody>;
+    return this.getShootingSetting(ShootingSetting.ISO);
   }
 
   public setISO(value: string) {
-    return CCAPIClient.request(
-      new URL("/ccapi/ver100/shooting/settings/iso", this.base),
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          value,
-        }),
-      },
-    ) as Promise<SetShootingSettingResponseBody>;
+    return this.setShootingSetting(ShootingSetting.ISO, value);
   }
 }
