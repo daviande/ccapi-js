@@ -81,4 +81,14 @@ export const handlers = [
       });
     },
   ),
+  http.put<
+    never,
+    SetShootingSettingRequestBody,
+    SetShootingSettingResponseBody
+  >(/\/ccapi\/ver100\/shooting\/settings\/iso/, async ({ request }) => {
+    const requestBody = await request.json();
+    return HttpResponse.json({
+      value: requestBody.value,
+    });
+  }),
 ];

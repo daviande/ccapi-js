@@ -40,7 +40,7 @@ export class CCAPIClient {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          value: value,
+          value,
         }),
       },
     ) as Promise<SetShootingSettingResponseBody>;
@@ -50,5 +50,20 @@ export class CCAPIClient {
     return CCAPIClient.request(
       new URL("/ccapi/ver100/shooting/settings/iso", this.base),
     ) as Promise<GetShootingSettingResponseBody>;
+  }
+
+  public setISO(value: string) {
+    return CCAPIClient.request(
+      new URL("/ccapi/ver100/shooting/settings/iso", this.base),
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          value,
+        }),
+      },
+    ) as Promise<SetShootingSettingResponseBody>;
   }
 }

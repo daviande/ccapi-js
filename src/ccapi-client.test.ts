@@ -31,3 +31,13 @@ test("getISO", async () => {
   const iso = await client.getISO();
   expect(iso).toMatchObject(expectedISO);
 });
+
+test("setISO", async () => {
+  const client = new CCAPIClient("http://192.168.7.122:8080");
+
+  const expectedISO = {
+    value: "100",
+  };
+  const iso = await client.setISO("100");
+  expect(iso).toMatchObject(expectedISO);
+});
