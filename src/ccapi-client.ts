@@ -14,6 +14,7 @@ export type SetShootingSettingResponseBody = {
 enum ShootingSetting {
   AV = "av",
   ISO = "iso",
+  Exposure = "exposure",
 }
 
 export class CCAPIClient {
@@ -65,5 +66,13 @@ export class CCAPIClient {
 
   public setISO(value: string) {
     return this.setShootingSetting(ShootingSetting.ISO, value);
+  }
+
+  public getExposure() {
+    return this.getShootingSetting(ShootingSetting.Exposure);
+  }
+
+  public setExposure(value: string) {
+    return this.setShootingSetting(ShootingSetting.Exposure, value);
   }
 }

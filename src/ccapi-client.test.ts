@@ -41,3 +41,24 @@ test("setISO", async () => {
   const iso = await client.setISO("100");
   expect(iso).toMatchObject(expectedISO);
 });
+
+test("getExposure", async () => {
+  const client = new CCAPIClient("http://192.168.7.122:8080");
+
+  const expectedExposure = {
+    value: expect.any(String),
+    ability: expect.arrayContaining(["-1_2/3"]),
+  };
+  const exposure = await client.getExposure();
+  expect(exposure).toMatchObject(expectedExposure);
+});
+
+test("setExposure", async () => {
+  const client = new CCAPIClient("http://192.168.7.122:8080");
+
+  const expectedExposure = {
+    value: "-1_2/3",
+  };
+  const iso = await client.setExposure("-1_2/3");
+  expect(iso).toMatchObject(expectedExposure);
+});

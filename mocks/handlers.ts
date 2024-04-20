@@ -91,4 +91,43 @@ export const handlers = [
       value: requestBody.value,
     });
   }),
+  http.get<never, never, GetShootingSettingResponseBody>(
+    /\/ccapi\/ver100\/shooting\/settings\/exposure/,
+    () => {
+      return HttpResponse.json({
+        value: "+0.0",
+        ability: [
+          "-3.0",
+          "-2_2/3",
+          "-2_1/3",
+          "-2.0",
+          "-1_2/3",
+          "-1_1/3",
+          "-1.0",
+          "-0_2/3",
+          "-0_1/3",
+          "+0.0",
+          "+0_1/3",
+          "+0_2/3",
+          "+1.0",
+          "+1_1/3",
+          "+1_2/3",
+          "+2.0",
+          "+2_1/3",
+          "+2_2/3",
+          "+3.0",
+        ],
+      });
+    },
+  ),
+  http.put<
+    never,
+    SetShootingSettingRequestBody,
+    SetShootingSettingResponseBody
+  >(/\/ccapi\/ver100\/shooting\/settings\/exposure/, async ({ request }) => {
+    const requestBody = await request.json();
+    return HttpResponse.json({
+      value: requestBody.value,
+    });
+  }),
 ];
