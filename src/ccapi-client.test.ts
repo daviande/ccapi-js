@@ -1,3 +1,4 @@
+import * as fs from "node:fs";
 import { CCAPIClient } from "./index";
 
 test("getAV", async () => {
@@ -61,4 +62,23 @@ test("setExposure", async () => {
   };
   const iso = await client.setExposure("-1_2/3");
   expect(iso).toMatchObject(expectedExposure);
+});
+
+test("getFlipDetail", async () => {
+  const client = new CCAPIClient("http://192.168.7.122:8080");
+
+  const expectedFlipDetail = {
+    incidentalInformation: {
+      liveviewdata: {
+        image: {
+          sizex: 8192,
+          sizey: 5464,
+        },
+      },
+    },
+    image: expect.any(ArrayBuffer),
+  };
+  const flipDetail = await client.getFlipDetail();
+  expect(flipDetail).toMatchObject(expectedFlipDetail);
+  fs.writeFileSync("flipdetail.jpg", Buffer.from(flipDetail.image));
 });

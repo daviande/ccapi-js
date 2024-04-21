@@ -3,3 +3,7 @@ curl http://192.168.7.122:8080/ccapi/ver100/shooting/settings/exposure
 
 curl -X PUT -H "Content-Type: application/json" -d '{"value":"-3.0"}' http://192.168.7.122:8080/ccapi/ver100/shooting/settings/exposure  
 {"value":"-3.0"}
+
+curl -X POST -H "Content-Type: application/json" -d '{"liveviewsize":"medium","cameradisplay":"on"}' http://192.168.7.122:8080/ccapi/ver100/shooting/liveview
+
+curl "http://192.168.7.122:8080/ccapi/ver100/shooting/liveview/flipdetail?kind=both" > flipdetail

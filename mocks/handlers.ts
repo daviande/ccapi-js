@@ -1,3 +1,5 @@
+import * as path from "node:path";
+import * as fs from "node:fs";
 import { http, HttpResponse } from "msw";
 import {
   GetShootingSettingResponseBody,
@@ -128,6 +130,15 @@ export const handlers = [
     const requestBody = await request.json();
     return HttpResponse.json({
       value: requestBody.value,
+    });
+  }),
+  http.get(/\/ccapi\/ver100\/shooting\/liveview\/flipdetail/, async () => {
+    const buffer = fs.readFileSync(path.resolve(__dirname, "flipdetail"));
+
+    return HttpResponse.arrayBuffer(buffer, {
+      headers: {
+        "Content-Type": "application/octet-stream",
+      },
     });
   }),
 ];

@@ -10,7 +10,7 @@
     "lint:fix": "npm run lint -- --fix",
     "prettier": "npx prettier . --check",
     "prettier:fix": "npm run prettier -- --write",
-    "test": "jest"
+    "test": "jest --runInBand"
   },
   "author": "",
   "license": "ISC",
