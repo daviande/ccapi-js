@@ -90,6 +90,22 @@ export class CCAPIClient {
     return this.setShootingSetting(ShootingSetting.Exposure, value);
   }
 
+  public setLiveView() {
+    return CCAPIClient.request(
+      new URL("/ccapi/ver100/shooting/liveview", this.base),
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          liveviewsize: "medium",
+          cameradisplay: "on",
+        }),
+      },
+    );
+  }
+
   public async getFlipDetail(): Promise<GetFlipDetailResponseBody> {
     const response = await fetch(
       new URL(

@@ -132,6 +132,9 @@ export const handlers = [
       value: requestBody.value,
     });
   }),
+  http.post(/\/ccapi\/ver100\/shooting\/liveview/, async () => {
+    return HttpResponse.json({});
+  }),
   http.get(/\/ccapi\/ver100\/shooting\/liveview\/flipdetail/, async () => {
     const buffer = fs.readFileSync(path.resolve(__dirname, "flipdetail"));
 

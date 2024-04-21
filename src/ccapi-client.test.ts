@@ -58,10 +58,17 @@ test("setExposure", async () => {
   const client = new CCAPIClient("http://192.168.7.122:8080");
 
   const expectedExposure = {
-    value: "-1_2/3",
+    value: "+0_1/3",
   };
-  const iso = await client.setExposure("-1_2/3");
+  const iso = await client.setExposure("+0_1/3");
   expect(iso).toMatchObject(expectedExposure);
+});
+
+test("setLiveView", async () => {
+  const client = new CCAPIClient("http://192.168.7.122:8080");
+
+  const livewView = await client.setLiveView();
+  expect(livewView).toMatchObject({});
 });
 
 test("getFlipDetail", async () => {
