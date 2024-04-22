@@ -26,6 +26,7 @@ export type GetFlipDetailResponseBody = {
 };
 
 enum ShootingSetting {
+  ShootingMode = "shootingmode",
   AV = "av",
   ISO = "iso",
   Exposure = "exposure",
@@ -64,6 +65,10 @@ export class CCAPIClient {
         }),
       },
     ) as Promise<SetShootingSettingResponseBody>;
+  }
+
+  public getShootingMode() {
+    return this.getShootingSetting(ShootingSetting.ShootingMode);
   }
 
   public getAV() {

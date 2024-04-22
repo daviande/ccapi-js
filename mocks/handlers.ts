@@ -9,6 +9,15 @@ import {
 
 export const handlers = [
   http.get<never, never, GetShootingSettingResponseBody>(
+    /\/ccapi\/ver100\/shooting\/settings\/shootingmode/,
+    () => {
+      return HttpResponse.json({
+        value: "av",
+        ability: ["a+", "fv", "p", "tv", "av", "m", "bulb", "c1", "c2", "c3"],
+      });
+    },
+  ),
+  http.get<never, never, GetShootingSettingResponseBody>(
     /\/ccapi\/ver100\/shooting\/settings\/av/,
     () => {
       return HttpResponse.json({

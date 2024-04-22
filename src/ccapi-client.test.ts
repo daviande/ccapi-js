@@ -1,6 +1,17 @@
 import * as fs from "node:fs";
 import { CCAPIClient } from "./index";
 
+test("getShootingMode", async () => {
+  const client = new CCAPIClient("http://192.168.7.122:8080");
+
+  const expectedShootingMode = {
+    value: expect.any(String),
+    ability: expect.arrayContaining(["av", "tv", "m"]),
+  };
+  const getShootingMode = await client.getShootingMode();
+  expect(getShootingMode).toMatchObject(expectedShootingMode);
+});
+
 test("getAV", async () => {
   const client = new CCAPIClient("http://192.168.7.122:8080");
 
