@@ -71,6 +71,10 @@ export class CCAPIClient {
     return this.getShootingSetting(ShootingSetting.ShootingMode);
   }
 
+  public setShootingMode(value: string) {
+    return this.setShootingSetting(ShootingSetting.ShootingMode, value);
+  }
+
   public getAV() {
     return this.getShootingSetting(ShootingSetting.AV);
   }

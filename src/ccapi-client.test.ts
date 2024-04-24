@@ -12,6 +12,16 @@ test("getShootingMode", async () => {
   expect(getShootingMode).toMatchObject(expectedShootingMode);
 });
 
+test("setShootingMode", async () => {
+  const client = new CCAPIClient("http://192.168.7.122:8080");
+
+  const expectedShootingMode = {
+    value: "av",
+  };
+  const shootingMode = await client.setShootingMode("av");
+  expect(shootingMode).toMatchObject(expectedShootingMode);
+});
+
 test("getAV", async () => {
   const client = new CCAPIClient("http://192.168.7.122:8080");
 

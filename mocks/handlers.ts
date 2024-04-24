@@ -17,6 +17,19 @@ export const handlers = [
       });
     },
   ),
+  http.put<
+    never,
+    SetShootingSettingRequestBody,
+    SetShootingSettingResponseBody
+  >(
+    /\/ccapi\/ver100\/shooting\/settings\/shootingmode/,
+    async ({ request }) => {
+      const requestBody = await request.json();
+      return HttpResponse.json({
+        value: requestBody.value,
+      });
+    },
+  ),
   http.get<never, never, GetShootingSettingResponseBody>(
     /\/ccapi\/ver100\/shooting\/settings\/av/,
     () => {
