@@ -1,3 +1,5 @@
+import axios, { AxiosRequestConfig } from "axios";
+
 export type GetShootingSettingResponseBody = {
   value: string;
   ability: string[];
@@ -35,15 +37,9 @@ enum ShootingSetting {
 export class CCAPIClient {
   constructor(private readonly base: string) {}
 
-  private static async request(resource: URL, options?: RequestInit) {
-    const response = await fetch(resource, options);
-    const jsonData = await response.json();
-
-    if (response.ok) {
-      return jsonData as object;
-    } else {
-      return Promise.reject((jsonData as { message: string }).message);
-    }
+  private static async request(resource: URL, options?: AxiosRequestConfig) {
+    const response = await axios(resource.href, options);
+    return response.data as object;
   }
 
   private getShootingSetting(setting: ShootingSetting) {
@@ -60,9 +56,9 @@ export class CCAPIClient {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
+        data: {
           value,
-        }),
+        },
       },
     ) as Promise<SetShootingSettingResponseBody>;
   }
@@ -107,53 +103,47 @@ export class CCAPIClient {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
+        data: {
           liveviewsize: "medium",
           cameradisplay: "on",
-        }),
+        },
       },
     );
   }
 
   public async getFlipDetail(): Promise<GetFlipDetailResponseBody> {
-    const response = await fetch(
-      new URL(
-        "/ccapi/ver100/shooting/liveview/flipdetail?kind=both",
-        this.base,
-      ),
+    const response = await axios.get(
+      new URL("/ccapi/ver100/shooting/liveview/flipdetail?kind=both", this.base)
+        .href,
+      { responseType: "arraybuffer" },
     );
 
-    if (response.ok) {
-      /*
+    /*
       0xFF,0x00,0x01,<Incidental information data size 4 bytes>,<Incidental information
       binary data>,0xFF,0xFF,
       0xFF,0x00,0x00,<Image data size 4 bytes>,<Image binary data>,0xFF,0xFF
       */
-      const buffer = await response.arrayBuffer();
+    const buffer = await response.data.buffer;
 
-      let start = 3;
-      const view = new DataView(buffer);
+    let start = 3;
+    const view = new DataView(buffer);
 
-      const incidentalInformationDataSize = view.getUint32(start);
+    const incidentalInformationDataSize = view.getUint32(start);
 
-      start += 4;
-      const decoder = new TextDecoder();
-      const incidentalInformation = JSON.parse(
-        decoder.decode(
-          buffer.slice(start, start + incidentalInformationDataSize),
-        ),
-      );
+    start += 4;
+    const decoder = new TextDecoder();
+    const incidentalInformation = JSON.parse(
+      decoder.decode(
+        buffer.slice(start, start + incidentalInformationDataSize),
+      ),
+    );
 
-      start += incidentalInformationDataSize + 5;
-      const imageDataSize = view.getUint32(start);
+    start += incidentalInformationDataSize + 5;
+    const imageDataSize = view.getUint32(start);
 
-      start += 4;
-      const image = buffer.slice(start, start + imageDataSize);
+    start += 4;
+    const image = buffer.slice(start, start + imageDataSize);
 
-      return { incidentalInformation, image };
-    } else {
-      const jsonData = await response.json();
-      return Promise.reject((jsonData as { message: string }).message);
-    }
+    return { incidentalInformation, image };
   }
 }
