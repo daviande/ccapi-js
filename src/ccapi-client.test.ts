@@ -1,9 +1,12 @@
 import * as fs from "node:fs";
 import { CCAPIClient } from "./index";
 
-test("getShootingMode", async () => {
-  const client = new CCAPIClient("http://192.168.7.122:8080");
+let client: CCAPIClient;
+beforeAll(() => {
+  client = new CCAPIClient("http://192.168.7.122:8080");
+});
 
+test("getShootingMode", async () => {
   const expectedShootingMode = {
     value: expect.any(String),
     ability: expect.arrayContaining(["av", "tv", "m"]),
@@ -13,8 +16,6 @@ test("getShootingMode", async () => {
 });
 
 test("setShootingMode", async () => {
-  const client = new CCAPIClient("http://192.168.7.122:8080");
-
   const expectedShootingMode = {
     value: "av",
   };
@@ -23,8 +24,6 @@ test("setShootingMode", async () => {
 });
 
 test("getAV", async () => {
-  const client = new CCAPIClient("http://192.168.7.122:8080");
-
   const expectedAV = {
     value: expect.any(String),
     ability: expect.arrayContaining(["f8.0"]),
@@ -34,8 +33,6 @@ test("getAV", async () => {
 });
 
 test("setAV", async () => {
-  const client = new CCAPIClient("http://192.168.7.122:8080");
-
   const expectedAV = {
     value: "f11",
   };
@@ -44,8 +41,6 @@ test("setAV", async () => {
 });
 
 test("getISO", async () => {
-  const client = new CCAPIClient("http://192.168.7.122:8080");
-
   const expectedISO = {
     value: expect.any(String),
     ability: expect.arrayContaining(["auto", "100"]),
@@ -55,8 +50,6 @@ test("getISO", async () => {
 });
 
 test("setISO", async () => {
-  const client = new CCAPIClient("http://192.168.7.122:8080");
-
   const expectedISO = {
     value: "100",
   };
@@ -65,8 +58,6 @@ test("setISO", async () => {
 });
 
 test("getExposure", async () => {
-  const client = new CCAPIClient("http://192.168.7.122:8080");
-
   const expectedExposure = {
     value: expect.any(String),
     ability: expect.arrayContaining(["-1_2/3"]),
@@ -76,8 +67,6 @@ test("getExposure", async () => {
 });
 
 test("setExposure", async () => {
-  const client = new CCAPIClient("http://192.168.7.122:8080");
-
   const expectedExposure = {
     value: "+0_1/3",
   };
@@ -86,15 +75,11 @@ test("setExposure", async () => {
 });
 
 test("setLiveView", async () => {
-  const client = new CCAPIClient("http://192.168.7.122:8080");
-
   const livewView = await client.setLiveView();
   expect(livewView).toMatchObject({});
 });
 
 test("getFlipDetail", async () => {
-  const client = new CCAPIClient("http://192.168.7.122:8080");
-
   const expectedFlipDetail = {
     incidentalInformation: {
       liveviewdata: {
