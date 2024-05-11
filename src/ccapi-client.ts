@@ -1,4 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
+import axiosRetry from "axios-retry";
+
+axiosRetry(axios, { retryDelay: axiosRetry.exponentialDelay });
 
 export type GetShootingSettingResponseBody = {
   value: string;
@@ -123,7 +126,9 @@ export class CCAPIClient {
       binary data>,0xFF,0xFF,
       0xFF,0x00,0x00,<Image data size 4 bytes>,<Image binary data>,0xFF,0xFF
       */
-    const buffer = await response.data.buffer;
+
+    // https://github.com/axios/axios/issues/3517
+    const buffer = response.data.buffer || response.data;
 
     let start = 3;
     const view = new DataView(buffer);
