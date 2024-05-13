@@ -74,6 +74,23 @@ test("setExposure", async () => {
   expect(iso).toMatchObject(expectedExposure);
 });
 
+test("getDrive", async () => {
+  const expectedDrive = {
+    value: expect.any(String),
+    ability: expect.arrayContaining(["single", "self_10sec"]),
+  };
+  const drive = await client.getDrive();
+  expect(drive).toMatchObject(expectedDrive);
+});
+
+test("setDrive", async () => {
+  const expectedDrive = {
+    value: "self_10sec",
+  };
+  const iso = await client.setDrive("self_10sec");
+  expect(iso).toMatchObject(expectedDrive);
+});
+
 test("setLiveView", async () => {
   const livewView = await client.setLiveView();
   expect(livewView).toMatchObject({});

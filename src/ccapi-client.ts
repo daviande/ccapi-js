@@ -35,6 +35,7 @@ enum ShootingSetting {
   AV = "av",
   ISO = "iso",
   Exposure = "exposure",
+  Drive = "drive",
 }
 
 export class CCAPIClient {
@@ -96,6 +97,14 @@ export class CCAPIClient {
 
   public setExposure(value: string) {
     return this.setShootingSetting(ShootingSetting.Exposure, value);
+  }
+
+  public getDrive() {
+    return this.getShootingSetting(ShootingSetting.Drive);
+  }
+
+  public setDrive(value: string) {
+    return this.setShootingSetting(ShootingSetting.Drive, value);
   }
 
   public setLiveView() {

@@ -166,4 +166,30 @@ export const handlers = [
       },
     });
   }),
+  http.get<never, never, GetShootingSettingResponseBody>(
+    /\/ccapi\/ver100\/shooting\/settings\/drive/,
+    () => {
+      return HttpResponse.json({
+        value: "self_2sec",
+        ability: [
+          "single",
+          "cont_super_hi",
+          "highspeed",
+          "lowspeed",
+          "self_10sec",
+          "self_2sec",
+        ],
+      });
+    },
+  ),
+  http.put<
+    never,
+    SetShootingSettingRequestBody,
+    SetShootingSettingResponseBody
+  >(/\/ccapi\/ver100\/shooting\/settings\/drive/, async ({ request }) => {
+    const requestBody = await request.json();
+    return HttpResponse.json({
+      value: requestBody.value,
+    });
+  }),
 ];
