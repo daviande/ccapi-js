@@ -11,8 +11,8 @@ test("getShootingMode", async () => {
     value: expect.any(String),
     ability: expect.arrayContaining(["av", "tv", "m"]),
   };
-  const getShootingMode = await client.getShootingMode();
-  expect(getShootingMode).toMatchObject(expectedShootingMode);
+  const shootingMode = await client.getShootingMode();
+  expect(shootingMode).toMatchObject(expectedShootingMode);
 });
 
 test("setShootingMode", async () => {
@@ -70,8 +70,8 @@ test("setExposure", async () => {
   const expectedExposure = {
     value: "+0_1/3",
   };
-  const iso = await client.setExposure("+0_1/3");
-  expect(iso).toMatchObject(expectedExposure);
+  const exposure = await client.setExposure("+0_1/3");
+  expect(exposure).toMatchObject(expectedExposure);
 });
 
 test("getDrive", async () => {
@@ -87,8 +87,25 @@ test("setDrive", async () => {
   const expectedDrive = {
     value: "self_10sec",
   };
-  const iso = await client.setDrive("self_10sec");
-  expect(iso).toMatchObject(expectedDrive);
+  const drive = await client.setDrive("self_10sec");
+  expect(drive).toMatchObject(expectedDrive);
+});
+
+test("getAEB", async () => {
+  const expectedAEB = {
+    value: expect.any(String),
+    ability: expect.arrayContaining(["+1.0", "+2_1/3"]),
+  };
+  const aeb = await client.getAEB();
+  expect(aeb).toMatchObject(expectedAEB);
+});
+
+test("setAEB", async () => {
+  const expectedDrive = {
+    value: "+1.0",
+  };
+  const aeb = await client.setAEB("+1.0");
+  expect(aeb).toMatchObject(expectedDrive);
 });
 
 test("setLiveView", async () => {
