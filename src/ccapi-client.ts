@@ -169,4 +169,19 @@ export class CCAPIClient {
 
     return { incidentalInformation, image };
   }
+
+  public async shutterButton() {
+    return CCAPIClient.request(
+      new URL("/ccapi/ver100/shooting/control/shutterbutton", this.base),
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: {
+          af: true,
+        },
+      },
+    );
+  }
 }

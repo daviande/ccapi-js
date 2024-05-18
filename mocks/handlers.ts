@@ -222,4 +222,7 @@ export const handlers = [
       value: requestBody.value,
     });
   }),
+  http.post(/\/ccapi\/ver100\/shooting\/control\/shutterbutton/, async () => {
+    return HttpResponse.json({});
+  }),
 ];
