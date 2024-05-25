@@ -116,10 +116,11 @@ export class CCAPIClient {
     return this.setShootingSetting(ShootingSetting.AEB, value);
   }
 
-  public setLiveView() {
+  public setLiveView(options: AxiosRequestConfig = {}) {
     return CCAPIClient.request(
       new URL("/ccapi/ver100/shooting/liveview", this.base),
       {
+        ...options,
         method: "POST",
         headers: {
           "Content-Type": "application/json",

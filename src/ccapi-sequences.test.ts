@@ -22,3 +22,8 @@ test("getLiveViewImage", async () => {
   expect(flipDetail).toMatchObject(expectedFlipDetail);
   fs.writeFileSync("flipdetail.jpg", Buffer.from(flipDetail.image));
 });
+
+test("shootStillImage", async () => {
+  const livewView = await CCAPISequences.shootStillImage(client);
+  expect(livewView).toMatchObject({});
+}, 300000);
