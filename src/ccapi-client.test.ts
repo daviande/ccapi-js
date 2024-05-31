@@ -108,6 +108,24 @@ test("setAEB", async () => {
   expect(aeb).toMatchObject(expectedDrive);
 });
 
+test("getFocusBracketing", async () => {
+  await client.setAEB("+0.0");
+  const expectedFocusBracketing = {
+    value: expect.any(String),
+    ability: expect.arrayContaining(["disable", "enable"]),
+  };
+  const focusBracketing = await client.getFocusBracketing();
+  expect(focusBracketing).toMatchObject(expectedFocusBracketing);
+});
+
+test("setFocusBracketing", async () => {
+  const expectedFocusBracketing = {
+    value: "disable",
+  };
+  const focusBracketing = await client.setFocusBracketing("disable");
+  expect(focusBracketing).toMatchObject(expectedFocusBracketing);
+});
+
 test("setLiveView", async () => {
   const livewView = await client.setLiveView();
   expect(livewView).toMatchObject({});

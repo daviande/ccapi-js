@@ -37,6 +37,7 @@ enum ShootingSetting {
   Exposure = "exposure",
   Drive = "drive",
   AEB = "aeb",
+  FocusBracketing = "focusbracketing",
 }
 
 export class CCAPIClient {
@@ -114,6 +115,14 @@ export class CCAPIClient {
 
   public setAEB(value: string) {
     return this.setShootingSetting(ShootingSetting.AEB, value);
+  }
+
+  public getFocusBracketing() {
+    return this.getShootingSetting(ShootingSetting.FocusBracketing);
+  }
+
+  public setFocusBracketing(value: string) {
+    return this.setShootingSetting(ShootingSetting.FocusBracketing, value);
   }
 
   public setLiveView(options: AxiosRequestConfig = {}) {
