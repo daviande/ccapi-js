@@ -22,7 +22,7 @@ davida@Davids-MacBook-Pro ccapi-client % curl "http://192.168.7.122:8080/ccapi/v
 {"value":"+0.0","ability":["+0.0","+0_1\/3","+0_2\/3","+1.0","+1_1\/3","+1_2\/3","+2.0","+2_1\/3","+2_2\/3","+3.0"]}
 
 davida@Davids-MacBook-Pro ~ % curl "http://192.168.7.122:8080/ccapi/ver100/shooting/settings/focusbracketing"
-{"value":"disable","ability":["disable","enable"]}% 
+{"value":"disable","ability":["disable","enable"]}%
 
 curl -X PUT -H "Content-Type: application/json" -d '{"value":"enable"}' http://192.168.7.122:8080/ccapi/ver100/shooting/settings/focusbracketing  
 {"value":"enable"}

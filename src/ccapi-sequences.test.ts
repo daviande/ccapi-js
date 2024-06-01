@@ -24,6 +24,7 @@ test("getLiveViewImage", async () => {
 });
 
 test("shootStillImage", async () => {
-  const livewView = await CCAPISequences.shootStillImage(client);
-  expect(livewView).toMatchObject({});
+  await client.setDrive("single");
+  await client.setAEB("+0_1/3");
+  await CCAPISequences.shootStillImage(client);
 }, 300000);

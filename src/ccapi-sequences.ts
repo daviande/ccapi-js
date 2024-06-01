@@ -6,15 +6,28 @@ async function getLiveViewImage(client: CCAPIClient) {
   return client.getFlipDetail();
 }
 
-async function shootStillImage(client: CCAPIClient) {
-  await client.shutterButton();
-  return client.setLiveView({
-    "axios-retry": {
-      retries: 300,
-      retryDelay: () => 1000,
-      retryCondition: isRetryableError,
-    },
-  });
+async function shootStillImage(
+  client: CCAPIClient,
+  numberOfBracketedShots = 3,
+) {
+  const drive = await client.getDrive();
+  const aeb = await client.getAEB();
+
+  const n =
+    aeb.value != "+0.0" && !drive.value.includes("self_")
+      ? numberOfBracketedShots
+      : 1;
+
+  for (let i = 0; i < n; i++) {
+    await client.shutterButton();
+    await client.setLiveView({
+      "axios-retry": {
+        retries: 300,
+        retryDelay: () => 1000,
+        retryCondition: isRetryableError,
+      },
+    });
+  }
 }
 
 export const CCAPISequences = {

@@ -170,7 +170,7 @@ export const handlers = [
     /\/ccapi\/ver100\/shooting\/settings\/drive/,
     () => {
       return HttpResponse.json({
-        value: "self_2sec",
+        value: "single",
         ability: [
           "single",
           "cont_super_hi",
@@ -196,7 +196,7 @@ export const handlers = [
     /\/ccapi\/ver100\/shooting\/settings\/aeb/,
     () => {
       return HttpResponse.json({
-        value: "+0.0",
+        value: "+0_1/3",
         ability: [
           "+0.0",
           "+0_1/3",
