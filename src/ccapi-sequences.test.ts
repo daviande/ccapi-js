@@ -25,7 +25,15 @@ test("getLiveViewImage", async () => {
   fs.writeFileSync("flipdetail.jpg", Buffer.from(flipDetail.image));
 });
 
-test("shootStillImage single", async () => {
+test("shootStillImage single +0.0", async () => {
+  await client.setDrive("single");
+  await client.setAEB("+0.0");
+  const spy = jest.spyOn(client, "shutterButton");
+  await CCAPISequences.shootStillImage(client);
+  expect(spy).toHaveBeenCalledTimes(1);
+}, 300000);
+
+test("shootStillImage single +0_1/3", async () => {
   await client.setDrive("single");
   await client.setAEB("+0_1/3");
   const spy = jest.spyOn(client, "shutterButton");
@@ -33,7 +41,7 @@ test("shootStillImage single", async () => {
   expect(spy).toHaveBeenCalledTimes(3);
 }, 300000);
 
-test("shootStillImage self_2sec", async () => {
+test("shootStillImage self_2sec +0_1/3", async () => {
   await client.setDrive("self_2sec");
   await client.setAEB("+0_1/3");
   const spy = jest.spyOn(client, "shutterButton");
