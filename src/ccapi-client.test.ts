@@ -23,7 +23,26 @@ test("setShootingMode", async () => {
   expect(shootingMode).toMatchObject(expectedShootingMode);
 });
 
+test("getTV", async () => {
+  await client.setShootingMode("m");
+  const expectedTV = {
+    value: expect.any(String),
+    ability: expect.arrayContaining(["1/125", '1"']),
+  };
+  const tv = await client.getTV();
+  expect(tv).toMatchObject(expectedTV);
+});
+
+test("setTV", async () => {
+  const expectedTV = {
+    value: "1/8",
+  };
+  const tv = await client.setTV("1/8");
+  expect(tv).toMatchObject(expectedTV);
+});
+
 test("getAV", async () => {
+  await client.setShootingMode("av");
   const expectedAV = {
     value: expect.any(String),
     ability: expect.arrayContaining(["f8.0"]),
