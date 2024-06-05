@@ -203,4 +203,20 @@ export class CCAPIClient {
       },
     );
   }
+
+  public async afFramePosition(positionX: number, positionY: number) {
+    return CCAPIClient.request(
+      new URL("/ccapi/ver100/shooting/liveview/afframeposition", this.base),
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: {
+          positionx: positionX,
+          positiony: positionY,
+        },
+      },
+    );
+  }
 }

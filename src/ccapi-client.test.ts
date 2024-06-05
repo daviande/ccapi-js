@@ -166,3 +166,8 @@ test("getFlipDetail", async () => {
   expect(flipDetail).toMatchObject(expectedFlipDetail);
   fs.writeFileSync("flipdetail.jpg", Buffer.from(flipDetail.image));
 });
+
+test("afFramePosition", async () => {
+  const livewView = await client.afFramePosition(4000, 4000);
+  expect(livewView).toMatchObject({});
+});

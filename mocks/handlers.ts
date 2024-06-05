@@ -341,4 +341,7 @@ export const handlers = [
       });
     },
   ),
+  http.put(/\/ccapi\/ver100\/shooting\/liveview\/afframeposition/, async () => {
+    return HttpResponse.json({});
+  }),
 ];
