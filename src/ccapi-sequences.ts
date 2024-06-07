@@ -30,7 +30,32 @@ async function shootStillImage(
   }
 }
 
+async function stillImageShutterButtonControl(
+  client: CCAPIClient,
+  signal: AbortSignal,
+) {
+  await client.shutterButtonManual("full_press");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  await new Promise((resolve, reject) => {
+    const intervalID = setInterval(() => {
+      if (signal.aborted) {
+        clearInterval(intervalID);
+        resolve(undefined);
+      }
+    }, 1000);
+  });
+  await client.shutterButtonManual("release");
+  await client.setLiveView({
+    "axios-retry": {
+      retries: 60,
+      retryDelay: () => 1000,
+      retryCondition: isRetryableError,
+    },
+  });
+}
+
 export const CCAPISequences = {
   getLiveViewImage,
   shootStillImage,
+  stillImageShutterButtonControl,
 };

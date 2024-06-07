@@ -204,6 +204,24 @@ export class CCAPIClient {
     );
   }
 
+  public async shutterButtonManual(
+    action: "half_press" | "full_press" | "release",
+  ) {
+    return CCAPIClient.request(
+      new URL("/ccapi/ver100/shooting/control/shutterbutton/manual", this.base),
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: {
+          action,
+          af: true,
+        },
+      },
+    );
+  }
+
   public async afFramePosition(positionX: number, positionY: number) {
     return CCAPIClient.request(
       new URL("/ccapi/ver100/shooting/liveview/afframeposition", this.base),

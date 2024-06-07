@@ -318,6 +318,12 @@ export const handlers = [
   http.post(/\/ccapi\/ver100\/shooting\/control\/shutterbutton/, async () => {
     return HttpResponse.json({});
   }),
+  http.post(
+    /\/ccapi\/ver100\/shooting\/control\/shutterbutton\/manual/,
+    async () => {
+      return HttpResponse.json({});
+    },
+  ),
   http.get<never, never, GetShootingSettingResponseBody>(
     /\/ccapi\/ver100\/shooting\/settings\/focusbracketing/,
     () => {

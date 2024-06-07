@@ -25,6 +25,16 @@ test("getLiveViewImage", async () => {
   fs.writeFileSync("flipdetail.jpg", Buffer.from(flipDetail.image));
 });
 
+test("stillImageShutterButtonControl", async () => {
+  await client.setDrive("lowspeed");
+  const controller = new AbortController();
+  setTimeout(() => controller.abort(), 3000);
+  await CCAPISequences.stillImageShutterButtonControl(
+    client,
+    controller.signal,
+  );
+}, 60000);
+
 test("shootStillImage single +0.0", async () => {
   await client.setDrive("single");
   await client.setAEB("+0.0");
