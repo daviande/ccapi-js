@@ -1,4 +1,5 @@
 import * as fs from "node:fs";
+import { beforeAll, afterEach, expect, test, vi } from "vitest";
 import { CCAPIClient, CCAPISequences } from "./index";
 
 let client: CCAPIClient;
@@ -6,7 +7,7 @@ beforeAll(() => {
   client = new CCAPIClient("http://192.168.7.122:8080");
 });
 
-afterEach(() => jest.restoreAllMocks());
+afterEach(() => vi.restoreAllMocks());
 
 test("getLiveViewImage", async () => {
   const expectedFlipDetail = {
@@ -38,7 +39,7 @@ test("stillImageShutterButtonControl", async () => {
 test("shootStillImage single +0.0", async () => {
   await client.setDrive("single");
   await client.setAEB("+0.0");
-  const spy = jest.spyOn(client, "shutterButton");
+  const spy = vi.spyOn(client, "shutterButton");
   await CCAPISequences.shootStillImage(client);
   expect(spy).toHaveBeenCalledTimes(1);
 }, 300000);
@@ -46,7 +47,7 @@ test("shootStillImage single +0.0", async () => {
 test("shootStillImage single +0_1/3", async () => {
   await client.setDrive("single");
   await client.setAEB("+0_1/3");
-  const spy = jest.spyOn(client, "shutterButton");
+  const spy = vi.spyOn(client, "shutterButton");
   await CCAPISequences.shootStillImage(client);
   expect(spy).toHaveBeenCalledTimes(3);
 }, 300000);
@@ -54,7 +55,7 @@ test("shootStillImage single +0_1/3", async () => {
 test("shootStillImage self_2sec +0_1/3", async () => {
   await client.setDrive("self_2sec");
   await client.setAEB("+0_1/3");
-  const spy = jest.spyOn(client, "shutterButton");
+  const spy = vi.spyOn(client, "shutterButton");
   await CCAPISequences.shootStillImage(client);
   expect(spy).toHaveBeenCalledTimes(1);
 }, 300000);

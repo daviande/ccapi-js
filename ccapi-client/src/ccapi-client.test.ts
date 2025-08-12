@@ -1,4 +1,5 @@
 import * as fs from "node:fs";
+import { beforeAll, expect, test } from "vitest";
 import { CCAPIClient } from "./index";
 
 let client: CCAPIClient;
