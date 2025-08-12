@@ -9,6 +9,6 @@ export default tseslint.config(
   eslintPluginPrettierRecommended,
   ...tseslint.configs.recommended,
   {
-    ignores: ["jest.config.cjs", "**/dist/**"],
+    ignores: ["**/dist/**"],
   },
 );
