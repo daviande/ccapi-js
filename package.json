@@ -1,4 +1,4 @@
 {
     "name": "ccapi-js",
-    "workspaces": ["ccapi-client"]
+    "workspaces": ["packages/*"]
 }
