@@ -251,7 +251,7 @@ export const handlers = [
   http.get(/\/ccapi\/ver100\/shooting\/liveview\/flipdetail/, async () => {
     const buffer = fs.readFileSync(path.resolve(__dirname, "flipdetail"));
 
-    return HttpResponse.arrayBuffer(buffer, {
+    return HttpResponse.arrayBuffer(buffer.buffer, {
       headers: {
         "Content-Type": "application/octet-stream",
       },

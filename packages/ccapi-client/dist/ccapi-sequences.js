@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,9 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.CCAPISequences = void 0;
-const axios_retry_1 = require("axios-retry");
+import { isRetryableError } from "axios-retry";
 function getLiveViewImage(client) {
     return __awaiter(this, void 0, void 0, function* () {
         yield client.setLiveView();
@@ -30,7 +27,7 @@ function shootStillImage(client_1) {
                 "axios-retry": {
                     retries: 300,
                     retryDelay: () => 1000,
-                    retryCondition: axios_retry_1.isRetryableError,
+                    retryCondition: isRetryableError,
                 },
             });
         }
@@ -53,12 +50,12 @@ function stillImageShutterButtonControl(client, signal) {
             "axios-retry": {
                 retries: 60,
                 retryDelay: () => 1000,
-                retryCondition: axios_retry_1.isRetryableError,
+                retryCondition: isRetryableError,
             },
         });
     });
 }
-exports.CCAPISequences = {
+export const CCAPISequences = {
     getLiveViewImage,
     shootStillImage,
     stillImageShutterButtonControl,

@@ -1,5 +1,5 @@
 import { isRetryableError } from "axios-retry";
-import { CCAPIClient } from "./ccapi-client";
+import { CCAPIClient } from "./ccapi-client.js";
 
 async function getLiveViewImage(client: CCAPIClient) {
   await client.setLiveView();

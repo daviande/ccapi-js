@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,11 +7,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.CCAPIClient = void 0;
-const axios_1 = require("axios");
-const axios_retry_1 = require("axios-retry");
-(0, axios_retry_1.default)(axios_1.default, { retryDelay: axios_retry_1.default.exponentialDelay });
+import axios from "axios";
+import axiosRetry from "axios-retry";
+axiosRetry(axios, { retryDelay: axiosRetry.exponentialDelay });
 var ShootingSetting;
 (function (ShootingSetting) {
     ShootingSetting["ShootingMode"] = "shootingmode";
@@ -24,13 +21,13 @@ var ShootingSetting;
     ShootingSetting["AEB"] = "aeb";
     ShootingSetting["FocusBracketing"] = "focusbracketing";
 })(ShootingSetting || (ShootingSetting = {}));
-class CCAPIClient {
+export class CCAPIClient {
     constructor(base) {
         this.base = base;
     }
     static request(resource, options) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield (0, axios_1.default)(resource.href, options);
+            const response = yield axios(resource.href, options);
             return response.data;
         });
     }
@@ -106,7 +103,7 @@ class CCAPIClient {
     }
     getFlipDetail() {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield axios_1.default.get(new URL("/ccapi/ver100/shooting/liveview/flipdetail?kind=both", this.base)
+            const response = yield axios.get(new URL("/ccapi/ver100/shooting/liveview/flipdetail?kind=both", this.base)
                 .href, { responseType: "arraybuffer" });
             /*
               0xFF,0x00,0x01,<Incidental information data size 4 bytes>,<Incidental information
@@ -170,5 +167,4 @@ class CCAPIClient {
         });
     }
 }
-exports.CCAPIClient = CCAPIClient;
 //# sourceMappingURL=ccapi-client.js.map
