@@ -1,5 +1,5 @@
 import { beforeAll, afterEach, afterAll } from "vitest";
-import { server } from "./mocks/node";
+import { server } from "@repo/msw-mocks";
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
