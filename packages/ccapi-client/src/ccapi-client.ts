@@ -1,7 +1,4 @@
-import axios, { AxiosRequestConfig } from "axios";
-import axiosRetry from "axios-retry";
-
-axiosRetry(axios, { retryDelay: axiosRetry.exponentialDelay });
+import ky, { Options } from "ky";
 
 export type GetShootingSettingResponseBody = {
   value: string;
@@ -44,14 +41,20 @@ enum ShootingSetting {
 export class CCAPIClient {
   constructor(private readonly base: string) {}
 
-  private static async request(resource: URL, options?: AxiosRequestConfig) {
-    const response = await axios(resource.href, options);
-    return response.data as object;
+  private static async request(url: URL, options: Options) {
+    return ky(url, {
+      retry: {
+        methods: ["get", "put", "post"],
+        limit: 3,
+      },
+      ...options,
+    }).json();
   }
 
   private getShootingSetting(setting: ShootingSetting) {
     return CCAPIClient.request(
       new URL(`/ccapi/ver100/shooting/settings/${setting}`, this.base),
+      { method: "get" },
     ) as Promise<GetShootingSettingResponseBody>;
   }
 
@@ -59,11 +62,8 @@ export class CCAPIClient {
     return CCAPIClient.request(
       new URL(`/ccapi/ver100/shooting/settings/${setting}`, this.base),
       {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: {
+        method: "put",
+        json: {
           value,
         },
       },
@@ -134,16 +134,13 @@ export class CCAPIClient {
     return this.setShootingSetting(ShootingSetting.FocusBracketing, value);
   }
 
-  public setLiveView(options: AxiosRequestConfig = {}) {
+  public setLiveView(options: Options = {}) {
     return CCAPIClient.request(
       new URL("/ccapi/ver100/shooting/liveview", this.base),
       {
         ...options,
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: {
+        method: "post",
+        json: {
           liveviewsize: "medium",
           cameradisplay: "on",
         },
@@ -152,10 +149,9 @@ export class CCAPIClient {
   }
 
   public async getFlipDetail(): Promise<GetFlipDetailResponseBody> {
-    const response = await axios.get(
+    const response = await ky.get(
       new URL("/ccapi/ver100/shooting/liveview/flipdetail?kind=both", this.base)
         .href,
-      { responseType: "arraybuffer" },
     );
 
     /*
@@ -163,9 +159,7 @@ export class CCAPIClient {
       binary data>,0xFF,0xFF,
       0xFF,0x00,0x00,<Image data size 4 bytes>,<Image binary data>,0xFF,0xFF
       */
-
-    // https://github.com/axios/axios/issues/3517
-    const buffer = response.data.buffer || response.data;
+    const buffer = await response.arrayBuffer();
 
     let start = 3;
     const view = new DataView(buffer);
@@ -193,11 +187,8 @@ export class CCAPIClient {
     return CCAPIClient.request(
       new URL("/ccapi/ver100/shooting/control/shutterbutton", this.base),
       {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: {
+        method: "post",
+        json: {
           af: true,
         },
       },
@@ -210,11 +201,8 @@ export class CCAPIClient {
     return CCAPIClient.request(
       new URL("/ccapi/ver100/shooting/control/shutterbutton/manual", this.base),
       {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: {
+        method: "post",
+        json: {
           action,
           af: true,
         },
@@ -226,11 +214,8 @@ export class CCAPIClient {
     return CCAPIClient.request(
       new URL("/ccapi/ver100/shooting/liveview/afframeposition", this.base),
       {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: {
+        method: "put",
+        json: {
           positionx: positionX,
           positiony: positionY,
         },

@@ -1,4 +1,3 @@
-import { isRetryableError } from "axios-retry";
 import { CCAPIClient } from "./ccapi-client.js";
 
 async function getLiveViewImage(client: CCAPIClient) {
@@ -21,10 +20,11 @@ async function shootStillImage(
   for (let i = 0; i < n; i++) {
     await client.shutterButton();
     await client.setLiveView({
-      "axios-retry": {
-        retries: 300,
-        retryDelay: () => 1000,
-        retryCondition: isRetryableError,
+      retry: {
+        methods: ["post"],
+        statusCodes: [503],
+        limit: 300,
+        delay: () => 1000,
       },
     });
   }
@@ -46,10 +46,11 @@ async function stillImageShutterButtonControl(
   });
   await client.shutterButtonManual("release");
   await client.setLiveView({
-    "axios-retry": {
-      retries: 60,
-      retryDelay: () => 1000,
-      retryCondition: isRetryableError,
+    retry: {
+      methods: ["post"],
+      statusCodes: [503],
+      limit: 60,
+      delay: () => 1000,
     },
   });
 }
