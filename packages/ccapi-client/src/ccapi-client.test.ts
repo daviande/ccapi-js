@@ -169,6 +169,6 @@ test("getFlipDetail", async () => {
 });
 
 test("afFramePosition", async () => {
-  const livewView = await client.afFramePosition(4000, 4000);
-  expect(livewView).toMatchObject({});
+  const afFramePosition = await client.afFramePosition(4000, 4000);
+  expect(afFramePosition).toMatchObject({});
 });
