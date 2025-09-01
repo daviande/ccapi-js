@@ -8,12 +8,8 @@ beforeAll(() => {
 });
 
 test("ShootingModeAction", async () => {
-  const action = new ShootingModeAction(client, "av");
+  const action = new ShootingModeAction("av");
   expect(action.value).toBe("av");
   expect(action.toString()).toBe("ShootingModeAction [value=av]");
-  await expect(action.run()).resolves.toMatchObject({ value: "av" });
-  await expect(action.getPresentValue()).resolves.toMatchObject({
-    value: "av",
-    ability: expect.arrayContaining(["av", "tv", "m"]),
-  });
+  await expect(action.run(client)).resolves.toMatchObject({ value: "av" });
 });
