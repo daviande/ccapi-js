@@ -41,7 +41,7 @@ enum ShootingSetting {
 export class CCAPIClient {
   constructor(private readonly base: string) {}
 
-  private static async request(url: URL, options: Options) {
+  private static request(url: URL, options: Options) {
     return ky(url, {
       retry: {
         methods: ["get", "put", "post"],
@@ -183,7 +183,7 @@ export class CCAPIClient {
     return { incidentalInformation, image };
   }
 
-  public async shutterButton() {
+  public shutterButton() {
     return CCAPIClient.request(
       new URL("/ccapi/ver100/shooting/control/shutterbutton", this.base),
       {
@@ -195,9 +195,7 @@ export class CCAPIClient {
     );
   }
 
-  public async shutterButtonManual(
-    action: "half_press" | "full_press" | "release",
-  ) {
+  public shutterButtonManual(action: "half_press" | "full_press" | "release") {
     return CCAPIClient.request(
       new URL("/ccapi/ver100/shooting/control/shutterbutton/manual", this.base),
       {
@@ -210,7 +208,7 @@ export class CCAPIClient {
     );
   }
 
-  public async afFramePosition(positionX: number, positionY: number) {
+  public afFramePosition(positionX: number, positionY: number) {
     return CCAPIClient.request(
       new URL("/ccapi/ver100/shooting/liveview/afframeposition", this.base),
       {
