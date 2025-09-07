@@ -3,7 +3,9 @@ import type {
   SetShootingSettingResponseBody,
 } from "@repo/ccapi-client";
 
-export abstract class ShootingSettingAction {
+import { CCAPIAction } from "./ccapi-action.js";
+
+export abstract class ShootingSettingAction implements CCAPIAction {
   constructor(public value: string) {}
 
   abstract run(client: CCAPIClient): Promise<SetShootingSettingResponseBody>;
