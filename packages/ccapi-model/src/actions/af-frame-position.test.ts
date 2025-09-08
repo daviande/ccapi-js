@@ -8,14 +8,9 @@ beforeAll(() => {
 });
 
 test("AFFramePositionAction", async () => {
-  const action = new AFFramePositionAction({
-    positionX: 4000,
-    positionY: 3000,
-  });
-  expect(action.value).toMatchObject({
-    positionX: 4000,
-    positionY: 3000,
-  });
+  const action = new AFFramePositionAction(4000, 3000);
+  expect(action.positionX).toBe(4000);
+  expect(action.positionY).toBe(3000);
   expect(action.toString()).toBe(
     "AFFramePositionAction [positionX=4000, positionY=3000]",
   );
